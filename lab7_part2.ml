@@ -83,7 +83,14 @@ expression that extracts the red channel of the color named Red,
 thereby naming the result `red_channel`.
 ......................................................................*)
 
-let red_channel : int = Color.red (Color.color_named(Red)) ;;
+let red_channel : int =
+  Color.red (Color.color_named Color.Red) ;;
+
+(* or if you prefer *)
+
+let red_channel : int =
+  let open Color in
+  red (color_named Red) ;;
 
 (* Let's investigate one way that a signature can be useful. Although
 color.ml contains an implementation of a basic color module, the
@@ -103,6 +110,26 @@ Once you have color.mli implemented, you should still be able to
 compile color.ml and run color.byte.
 ......................................................................*)
 
+(* The module type for the Color module captures the interface we want
+our color modules to obey. Your color.mli file should have the
+following types and values declared. If you have trouble getting this
+to work, you can find our solution in color.mli.
+
+    type color ;;
+    type color_name =
+      | Red
+      | Green
+      | Blue
+      | Orange
+      | Yellow
+      | Indigo
+      | Violet ;;
+    val to_color : int -> int -> int -> color ;;
+    val red : color -> int ;;
+    val green: color -> int ;;
+    val blue: color -> int ;;
+    val color_named: color_name -> color ;;
+ *)
 
 (*......................................................................
 Exercise 2C:
@@ -128,6 +155,7 @@ the color_name type to have the following values:
 
 ......................................................................*)
 
+(* See the solution in color.ml *)
 
 (* Here's the payoff: A user who uses the color module, by virtue of
 having to stay within the color.mli interface, will not notice **any
